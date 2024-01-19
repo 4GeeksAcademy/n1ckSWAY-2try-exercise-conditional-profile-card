@@ -1,3 +1,4 @@
+import { left, right } from "@popperjs/core";
 import "../style/index.css";
 
 /**
@@ -15,11 +16,11 @@ import "../style/index.css";
         linkedin: null,
         instagram: null,
 
-        name: null,
-        lastName: null,
-        role: null,
-        country: null,
-        city: null
+        name: null, $
+        lastName: null,$
+        role: null,$
+        country: null,$
+        city: null$
     }
  */
 function render(variables = {}) {
@@ -28,19 +29,68 @@ function render(variables = {}) {
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
+  let name = variables.name === null ? "Lucy" : variables.name;
+  let lastName = variables.lastName === null ? "Biolett" : variables.lastName;
+  let city = variables.city === null ? "city" : variables.city;
+  let role = variables.role === null ? "role" : variables.role;
+  let country = variables.country === null ? "country" : variables.country;
+  let twitter = variables.twitter === null ? "twitter" : variables.twitter;
 
+  let instagram = variables.instagram === null ? "insta" : variables.instagram;
+  let github = variables.github === null ? "github" : variables.github;
+  let linkedin = variables.linkedin === null ? "linkedin" : variables.linkedin;
+
+  function getPosition() {
+    const dropdown = document.getElementById("socialMediaPosition");
+    const selectedValue = dropdown.value;
+    if (selectedValue === "position-left") {
+      return "position-left";
+    } else if (selectedValue === "position-right") {
+      return "position-right";
+    } else {
+      // Handle default case if needed
+      return "position-right"; // Default to "position-right" if neither left nor right is selected
+    }
+  }
   // reset the website body with the new html output
+
+  document.querySelector(
+    "#country"
+  ).innerHTML = `<select class="picker" id="country" for="country"> <option value="">${country}</option>
+    <option value="USA">USA</option>
+    <option value="Germany">Germany</option>
+    <option value="Canada">Canada</option>
+    <option value="Venezuela">Venezuela</option>
+  </select>`;
+  document.querySelector(
+    "#role"
+  ).innerHTML = ` <select class="picker" id="role" for="role">
+    <option value="">${role}</option>
+    <option value="Web Developer">Web Developer</option>
+    <option value="Floor Planner">Floor Planner</option>
+    <option value="Technical Writter">Technical Writter</option>
+  </select>`;
+
+  document.querySelector(
+    "#city"
+  ).innerHTML = `<select class="picker" id="city" for="city">
+      <option value="">${city}</option>
+      <option value="Miami">Miami</option>
+      <option value="Munich">Munich</option>
+      <option value="Caracas">Caracas</option>
+      <option value="Toronto">Toronto</option>
+    </select>`;
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <h1>${name} ${lastName}</h1>
+          <h2>${role}</h2>
+          <h3>${city}, ${country}</h3>
+          <ul class="${getPosition()}">
+            <li><a href="https://twitter.com/${twitter}"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://github.com/${github}"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/school/${linkedin}"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/${instagram}"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
